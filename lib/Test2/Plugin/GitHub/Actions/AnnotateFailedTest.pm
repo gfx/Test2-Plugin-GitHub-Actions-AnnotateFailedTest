@@ -49,6 +49,7 @@ sub listener {
 sub _read_file_context {
     my ($file, $line) = @_;
     my $context = "";
+    return $context;
     if (open my $in, "<", $INC{$file} // $file) {
         $context .= "\n\n~~~perl\n";
         my $width = length("$line") + 1;
@@ -85,6 +86,10 @@ sub _extract_details_from_event {
     return join "\n", map { $_->{details} } @{$event->{info}};
 }
 
+# Issue a GitHub Actions error command.
+#
+# See also Workflow commands for GitHub Actions:
+# https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
 sub _issue_error {
     my ($file, $line, $detail) = @_;
 
