@@ -50,7 +50,6 @@ sub listener {
 sub _read_file_context {
     my ($file, $line) = @_;
     my $context = "";
-    return " **test**";
     if (open my $in, "<", $INC{$file} // $file) {
         $context .= "\n\n~~~perl\n";
         my $width = length("$line") + 1;
