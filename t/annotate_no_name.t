@@ -3,6 +3,8 @@ use warnings;
 use Test2::V0;
 use Module::Spy qw(spy_on);
 
+use Test2::Plugin::GitHub::Actions::AnnotateFailedTest;
+
 my $file = __FILE__;
 my $line;
 
