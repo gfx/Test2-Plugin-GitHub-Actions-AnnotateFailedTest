@@ -41,7 +41,7 @@ sub listener {
     my $message = encode_utf8(join "\n", grep { defined } ($summary, $details)); # avoid Wide character in print warning
 
     if ($trace->file and $trace->line) {
-        $message .= _read_file_context($trace->file, $trace->line);
+        $message = _read_file_context($trace->file, $trace->line) . "\n" . $message;
     }
 
     _issue_error($file, $line, $message);
@@ -51,7 +51,6 @@ sub _read_file_context {
     my ($file, $line) = @_;
     my $context = "";
     if (open my $in, "<", $INC{$file} // $file) {
-        $context .= "\n\n~~~perl\n";
         my $width = length("$line") + 1;
         my ($min, $max) = ($line -  1, $line + 1);
         while (defined(my $s = <$in>)) {
@@ -61,7 +60,6 @@ sub _read_file_context {
                 $context .= sprintf "%0*d%s %s\n", $width, $., $marker, $s;
             }
         }
-        $context .= "~~~\n";
     }
     return $context;
 }
