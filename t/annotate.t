@@ -19,6 +19,7 @@ my $event = intercept {
     ok 0, 'failed';
 };
 my $call = $g->calls_most_recent;
+pop @$call; # pop the last arg $file_context
 undef $g;
 
 like $event, array {

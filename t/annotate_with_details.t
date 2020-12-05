@@ -19,6 +19,7 @@ my $event = intercept {
     is 0, -1, 'not equal';
 };
 my $call = $g->calls_most_recent;
+pop @$call; # pop the last arg $file_context
 undef $g;
 
 my $fail = $event->[0];
