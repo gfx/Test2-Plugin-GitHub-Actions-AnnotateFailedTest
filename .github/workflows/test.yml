@@ -1,15 +1,17 @@
+name: CI
+
 on:
   push:
     branches:
-      - master
+      #- master
   pull_request:
 
 jobs:
   test:
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        perl-version: ['5.24', '5.26', '5.28', '5.30']
+        os: ['ubuntu-latest']
+        perl-version: ['5.24']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -26,6 +28,6 @@ jobs:
         with:
           perl-version: ${{ matrix.perl-version }}
 
-      - run: cpanm -L local --installdeps .
+      - run: cpanm -L local --installdeps --notest .
 
       - run: prove -Ilocal/lib/perl5 -Ilib -lv t
